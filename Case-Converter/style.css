@@ -1,0 +1,92 @@
+.title {
+    font-family: sans-serif;
+    margin-left: 1.25vw;
+}
+
+textarea {
+    width: 97.5%;
+    height: 50vh;
+    margin-top: 2vh;
+    margin-left: 1.25vw;
+}
+
+.command-block {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 3%;
+    grid-row-gap: 1.3vh;;
+    margin-left: 1.25vw;
+    margin-top: 2vh;
+}
+
+#time {
+    grid-column: 2 / span 3;
+    width: 100%;
+    
+}
+
+
+button {
+    width: 17vw;
+    height: 6vh;
+    font-family: 'Mukta', sans-serif;
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: 2px solid black;
+}
+
+#upper-case {
+    color: crimson;
+    border-color: red;
+}
+
+#upper-case:hover {
+    background: crimson;
+    color: white;
+}
+
+#lower-case {
+    color: springgreen;
+    border-color: lawngreen;
+}
+
+#lower-case:hover {
+    background: springgreen;
+    color: white;
+}
+
+#proper-case {
+    color: #2196F3;
+    border-color: dodgerblue;
+}
+
+#proper-case:hover {
+    background: #2196F3;
+    color: white;
+}
+
+#sentence-case {
+    color: #ff9800;
+    border-color: orange;
+}
+
+#sentence-case:hover {
+    background: #ff9800;
+    color: white;
+}
+
+#clear:hover {
+    border-color: red;
+    background: red;
+    
+}
+
+#save {
+    color: #00D1EA;
+    border-color: #05E2D6;
+}
+
+#save:hover {
+    background: #00D1EA;
+    color: white;
+}
