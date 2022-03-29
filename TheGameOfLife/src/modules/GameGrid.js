@@ -19,14 +19,14 @@ class GameGrid {
         this.generation = 0;
         this.isDead = false;
         // initialize the board
-        this.fillGrid(this.width);
+        this.emptyGrid(this.width);
         this.generateRandomCoordinate();
     }
 
     /**
      * @param {number} width, fill the grid with this width
      */
-    fillGrid(width) {
+    emptyGrid(width= this.width) {
         for (let i = 0; i < width; ++i) {
             this.matrix[i] = Array(width).fill("-");
         }
