@@ -1,7 +1,6 @@
 // TODO stop the repeat timer
 class GameGrid {
     width;
-    ms = 1000;
     directions = [
         [-1, -1], // top left corner      0
         [-1, 0], // top middle           1
@@ -17,7 +16,8 @@ class GameGrid {
         this.width = width;
         this.matrix = [];
         this.pMatrix = [];
-
+        this.generation = 0;
+        this.isDead = false;
         // initialize the board
         this.fillGrid(this.width);
         this.generateRandomCoordinate();
@@ -51,9 +51,7 @@ class GameGrid {
                         y + this.directions[i][1]
                     ] || null;
                 positions.push(availableCoordinates);
-            } catch (e) {
-                continue;
-            }
+            } catch (e) {}
         }
         positions = positions.filter((element) => element);
 
@@ -86,30 +84,33 @@ class GameGrid {
     }
 
     gridUpdate() {
-        // deepcopy the board
+        // Deep copy the board
         this.pMatrix = JSON.parse(JSON.stringify(this.matrix));
+
+        this.isDead = this.pMatrix.every((row) => {
+            return row.every((cell) => {
+                return cell === "-";
+            });
+        });
+        if (this.isDead) {
+            return;
+        }
         // iterate through the matrix with previous board
         for (let i = 0; i < this.width; ++i) {
             for (let j = 0; j < this.width; ++j) {
                 this.cellUpdate(i, j, this.pMatrix);
             }
         }
+        this.generation++;
     }
 
-    /**
-     * update the grid and log it
-     */
-    run() {
-        this.gridUpdate();
-        console.log(this.matrix);
-    }
     /**
      * generate random coordinates
      */
     generateRandomCoordinate() {
         let randomCoordinates = [];
 
-        // get pair of random coordinates
+        // get a pair of random coordinates
         for (let i = 0; i < randomNumber(this.width ** 2); ++i) {
             const newCoordinates = [
                 randomNumber(this.width),
@@ -131,4 +132,4 @@ class GameGrid {
     }
 }
 
-// export default GameGrid;
+export default GameGrid;
