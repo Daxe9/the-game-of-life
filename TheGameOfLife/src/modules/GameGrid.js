@@ -26,7 +26,7 @@ class GameGrid {
     /**
      * @param {number} width, fill the grid with this width
      */
-    emptyGrid(width= this.width) {
+    emptyGrid(width = this.width) {
         for (let i = 0; i < width; ++i) {
             this.matrix[i] = Array(width).fill("-");
         }

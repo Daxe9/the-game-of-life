@@ -1,25 +1,31 @@
 <template>
     <v-container>
-        <v-alert
-            v-show="board.isDead"
-            outlined
-            shaped
-            text
-            type="success"
-        >
+        <v-alert v-show="board.isDead" outlined shaped text type="success">
             Everybody died.
         </v-alert>
         <v-container id="control-panel">
-            <v-btn @click="singleUpdate">Single Update</v-btn>
-            <v-btn @click="runUpdates">Start</v-btn>
-            <v-btn @click="addRandomCells">Add</v-btn>
-            <v-btn @click="stopUpdates">Stop</v-btn>
-            <v-btn @click="clearGrid">Clear</v-btn>
+            <v-row>
+                <v-col
+                    ><v-btn @click="singleUpdate">Single Update</v-btn>
+                    <v-btn @click="runUpdates">Start</v-btn>
+                    <v-btn @click="addRandomCells">Add</v-btn>
+                    <v-btn @click="stopUpdates">Stop</v-btn>
+                    <v-btn @click="clearGrid">Clear</v-btn>
+                </v-col>
+                <v-col>
+                    <v-text-field
+                        label="Width"
+                        v-model="width"
+                        :disabled="hasInput"
+                        @change="change"
+                    ></v-text-field>
+                </v-col>
+            </v-row>
         </v-container>
 
         <v-container
-            class="rounded-lg flex-column"
-            :style="{height: '80vh', width: '80vh'}"
+            class="rounded-lg flex-column elevation-9"
+            :style="{ height: '80vh', width: '80vh' }"
         >
             <Rows
                 v-for="(row, rowIndex) in board.matrix"
@@ -32,21 +38,21 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import { ref, watch } from "vue";
 import GameGrid from "../modules/GameGrid";
 import Rows from "./Rows.vue";
 
 // setup
-const board = ref(new GameGrid(50));
 const isStopped = ref(false);
-const ratio = 100 / board.value.matrix.length;
+const width = ref(0);
+const hasInput = ref(false);
+const board = ref(new GameGrid(parseInt(width.value)));
 
 // functions
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 function singleUpdate() {
     board.value.gridUpdate();
 }
-
 async function runUpdates() {
     isStopped.value = false;
     while (!board.value.isDead && !isStopped.value) {
@@ -66,5 +72,9 @@ function clearGrid() {
     board.value.generation = 0;
     board.value.isDead = false;
 }
-
+function change() {
+    console.log(width.value);
+    console.log(typeof width.value);
+    hasInput.value = true;
+}
 </script>
