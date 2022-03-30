@@ -23,7 +23,6 @@ const props = defineProps({
 });
 
 const ratio = (100 / props.cells.length) + "%";
-console.log(ratio);
 </script>
 <style>
 .stocazzo {
