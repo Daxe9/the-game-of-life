@@ -39,6 +39,7 @@
                 v-for="(row, rowIndex) in board.matrix"
                 :key="rowIndex"
                 :cells="row"
+                @updateSingleCell="updateSingleCell"
             />
         </v-container>
         <p>Generation: {{ board.generation }}</p>
@@ -106,5 +107,8 @@ function enter(el, done) {
         ease: "power4.out",
         onComplete: done,
     })
+}
+function updateSingleCell(id) {
+    board.value.updateSingleCell(id);
 }
 </script>
