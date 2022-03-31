@@ -27,8 +27,16 @@ class GameGrid {
      * @param {number} width, fill the grid with this width
      */
     emptyGrid(width = this.width) {
+        let id = 0;
         for (let i = 0; i < width; ++i) {
-            this.matrix[i] = Array(width).fill("-");
+            this.matrix[i] = [];
+            for (let j = 0; j < width; ++j) {
+                this.matrix[i][j] = new Object({
+                    id: id,
+                    state: false,
+                });
+                id++;
+            }
         }
     }
 
@@ -40,7 +48,7 @@ class GameGrid {
     cellUpdate(x, y, pMatrix) {
         let counter = 0;
         let availableCells;
-        let sign = this.matrix[x][y];
+        let sign = this.matrix[x][y].state;
         let positions = [];
 
         // get available cells
@@ -58,16 +66,14 @@ class GameGrid {
         // get the number of cells with different sign
         availableCells = positions.length;
         positions.forEach((cell) => {
-            if (cell !== sign) {
+            if (cell.state !== sign) {
                 ++counter;
             }
         });
 
         // update the cell
-        if (sign === "-") {
-            if (counter === 3) {
-                sign = "#";
-            }
+        if (!sign && counter === 3) {
+            sign = true;
         } else {
             // I'm tired to change it
             // Please someone help me to make it better
@@ -77,19 +83,40 @@ class GameGrid {
                 (availableCells === 5 && (counter > 3 || counter < 2)) ||
                 (availableCells === 4 && counter > 1)
             ) {
-                sign = "-";
+                sign = false;
             }
         }
-        this.matrix[x][y] = sign;
+        this.matrix[x][y].state = sign;
     }
 
+    // this is so ugly, but I can't find a better way
+    /**
+     * @param {number} id, the id of the cell
+     */
+    updateSingleCell(id) {
+        let find = false;
+        for (let i = 0; i < this.width && !find; ++i) {
+            for (let j = 0; j < this.width; ++j) {
+                if (this.matrix[i][j].id === id) {
+                    this.matrix[i][j].state = !this.matrix[i][j].state
+                    find = true;
+                    break;
+                }
+            }
+        }
+    }
+
+
+    /**
+     * update all grid
+     * */
     gridUpdate() {
         // Deep copy the board
         this.pMatrix = JSON.parse(JSON.stringify(this.matrix));
 
         this.isDead = this.pMatrix.every((row) => {
             return row.every((cell) => {
-                return cell === "-";
+                return !cell.state;
             });
         });
         if (this.isDead) {
@@ -111,7 +138,7 @@ class GameGrid {
         let randomCoordinates = [];
 
         // get a pair of random coordinates
-        for (let i = 0; i < randomNumber(this.width ** 2); ++i) {
+        for (let i = 0; i < randomNumber(this.width ** 3); ++i) {
             const newCoordinates = [
                 randomNumber(this.width),
                 randomNumber(this.width),
@@ -123,7 +150,7 @@ class GameGrid {
 
         // set to alive cells with given random coordinates
         randomCoordinates.forEach((coordinates) => {
-            this.matrix[coordinates[0]][coordinates[1]] = "#";
+            this.matrix[coordinates[0]][coordinates[1]].state = true;
         });
 
         function randomNumber(max) {
