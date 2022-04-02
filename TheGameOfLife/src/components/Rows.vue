@@ -1,8 +1,8 @@
 <template>
-    <div class="stocazzo">
+    <div class="wrapper">
         <Cell
             :style="{
-                width: `${parseInt(ratio.split('%')[0])}%`,
+                width: ratio,
                 height: `100%`
             }"
             class="cardWidth rounded-0"
@@ -33,7 +33,7 @@ function updateSingleCell(id) {
 const ratio = computed(() => (100 / props.cells.length) + "%");
 </script>
 <style>
-.stocazzo {
+.wrapper {
     display: flex;
     flex-flow: row nowrap;
     height: v-bind(ratio);

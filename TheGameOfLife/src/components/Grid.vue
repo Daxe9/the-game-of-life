@@ -30,7 +30,7 @@
                 </v-col>
             </v-row>
         </v-container>
-
+        <h3 class="text-center">Generation: <span class="red lighten-1">{{ board.generation }}</span></h3>
         <v-container
             :style="{ height: '80vh', width: '80vh' }"
             class="flex-column elevation-9"
@@ -42,7 +42,6 @@
                 @updateSingleCell="updateSingleCell"
             />
         </v-container>
-        <p>Generation: {{ board.generation }}</p>
     </v-container>
 </template>
 
