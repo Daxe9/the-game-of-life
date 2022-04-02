@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import {defineEmits} from "vue";
+import {defineEmits, computed} from "vue";
 import Cell from "./Cell.vue"
 const props = defineProps({
     cells: {
@@ -30,7 +30,7 @@ function updateSingleCell(id) {
     emit("updateSingleCell", id);
 }
 
-const ratio = (100 / props.cells.length) + "%";
+const ratio = computed(() => (100 / props.cells.length) + "%");
 </script>
 <style>
 .stocazzo {

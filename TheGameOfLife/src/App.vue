@@ -5,17 +5,8 @@
     </v-main>
   </v-app>
 </template>
-
-<script>
+<script setup>
 import Grid from "./components/Grid.vue";
-
-export default {
-  name: 'App',
-
-  components: {
-      Grid
-  },
-}
 </script>
 <style>
 body, html {
