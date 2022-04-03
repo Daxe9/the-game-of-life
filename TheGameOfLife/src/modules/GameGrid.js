@@ -9,7 +9,7 @@ class GameGrid {
         [0, 1], // middle right         4
         [1, -1], // bottom left corner   5
         [1, 0], // bottom middle        6
-        [1, 1], // bottom right corner  7
+        [1, 1] // bottom right corner  7
     ];
 
     constructor(width) {
@@ -33,7 +33,7 @@ class GameGrid {
             for (let j = 0; j < width; ++j) {
                 this.matrix[i][j] = new Object({
                     id: id,
-                    state: false,
+                    state: false
                 });
                 id++;
             }
@@ -98,14 +98,13 @@ class GameGrid {
         for (let i = 0; i < this.width && !find; ++i) {
             for (let j = 0; j < this.width; ++j) {
                 if (this.matrix[i][j].id === id) {
-                    this.matrix[i][j].state = !this.matrix[i][j].state
+                    this.matrix[i][j].state = !this.matrix[i][j].state;
                     find = true;
                     break;
                 }
             }
         }
     }
-
 
     /**
      * update all grid
@@ -141,7 +140,7 @@ class GameGrid {
         for (let i = 0; i < randomNumber(this.width ** 3); ++i) {
             const newCoordinates = [
                 randomNumber(this.width),
-                randomNumber(this.width),
+                randomNumber(this.width)
             ];
             if (!(newCoordinates in randomCoordinates)) {
                 randomCoordinates.push(newCoordinates);
