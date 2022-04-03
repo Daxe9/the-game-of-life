@@ -6,8 +6,8 @@
                 height: `100%`
             }"
             class="cardWidth rounded-0"
-            v-for="(cell, i) in cells"
-            :key="i"
+            v-for="cell in cells"
+            :key="cell.id"
             :cell="cell"
             @updateSingleCell="updateSingleCell"
         />
@@ -15,8 +15,8 @@
 </template>
 
 <script setup>
-import {defineEmits, computed} from "vue";
-import Cell from "./Cell.vue"
+import { computed } from "vue";
+import Cell from "./Cell.vue";
 const props = defineProps({
     cells: {
         type: Array,
@@ -24,13 +24,10 @@ const props = defineProps({
     }
 });
 const emit = defineEmits(["updateSingleCell"]);
-
-
+const ratio = computed(() => 100 / props.cells.length + "%");
 function updateSingleCell(id) {
     emit("updateSingleCell", id);
 }
-
-const ratio = computed(() => (100 / props.cells.length) + "%");
 </script>
 <style>
 .wrapper {

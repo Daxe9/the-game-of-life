@@ -6,14 +6,20 @@
             @enter="enter"
             @before-enter="beforeEnter"
         >
-            <v-alert ref="alert" v-show="board.isDead" outlined shaped text type="success">
+            <v-alert
+                ref="alert"
+                v-show="board.isDead"
+                outlined
+                shaped
+                text
+                type="success"
+            >
                 Everybody died.
             </v-alert>
         </transition>
         <v-container id="control-panel">
             <v-row>
-                <v-col
-                >
+                <v-col>
                     <v-btn @click="singleUpdate">Single Update</v-btn>
                     <v-btn @click="runUpdates">Start</v-btn>
                     <v-btn @click="addRandomCells">Add</v-btn>
@@ -23,21 +29,24 @@
                 <v-col>
                     <v-text-field
                         v-model="width"
-                        :disabled="hasInput"
+                        v-show="!hasInput"
                         label="Width"
                         @change="change"
                     ></v-text-field>
                 </v-col>
             </v-row>
         </v-container>
-        <h3 class="text-center">Generation: <span class="red lighten-1">{{ board.generation }}</span></h3>
+        <h3 class="text-center">
+            Generation:
+            <span class="red lighten-1">{{ board.generation }}</span>
+        </h3>
         <v-container
             :style="{ height: '80vh', width: '80vh' }"
             class="flex-column elevation-9"
         >
             <Rows
                 v-for="(row, rowIndex) in board.matrix"
-                :key="rowIndex"
+                :key="rowIndex.toExponential()"
                 :cells="row"
                 @updateSingleCell="updateSingleCell"
             />
@@ -47,7 +56,7 @@
 
 <script setup>
 import gsap from "gsap";
-import {ref} from "vue";
+import { ref } from "vue";
 import GameGrid from "../modules/GameGrid";
 import Rows from "./Rows.vue";
 
@@ -92,7 +101,11 @@ function change() {
     board.value = new GameGrid(parseInt(width.value));
     hasInput.value = true;
 }
+function updateSingleCell(id) {
+    board.value.updateSingleCell(id);
+}
 
+// animation for alert
 function beforeEnter(el) {
     el.style.opacity = 0;
     el.style.transform = "scale(0, -10px)";
@@ -104,10 +117,7 @@ function enter(el, done) {
         opacity: 1,
         scale: 1,
         ease: "power4.out",
-        onComplete: done,
-    })
-}
-function updateSingleCell(id) {
-    board.value.updateSingleCell(id);
+        onComplete: done
+    });
 }
 </script>

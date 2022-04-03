@@ -1,11 +1,11 @@
 <template>
-    <v-card :style="{backgroundColor: color}" @click="updateState"/>
+    <v-card :style="{ backgroundColor: color }" @click="updateState" />
 </template>
 
 <script setup>
-import { watch, ref, defineEmits } from "vue";
+import { watch, ref } from "vue";
 // define emits
-const emit = defineEmits(["updateSingleCell"])
+const emit = defineEmits(["updateSingleCell"]);
 // receive cell state from parent component
 const props = defineProps({
     cell: {
@@ -15,12 +15,16 @@ const props = defineProps({
 });
 
 // set cell color based on state
-const color = ref("")
-watch(props, () => {
-    color.value = props.cell.state ? "green" : "white"
-}, {immediate: true})
+const color = ref("");
+watch(
+    props,
+    () => {
+        color.value = props.cell.state ? "green" : "white";
+    },
+    { immediate: true }
+);
 
 function updateState() {
-    emit("updateSingleCell", props.cell.id)
+    emit("updateSingleCell", props.cell.id);
 }
 </script>
